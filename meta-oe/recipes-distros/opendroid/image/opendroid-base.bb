@@ -20,7 +20,6 @@ RDEPENDS_${PN} = " \
     busybox-cron \
     python-imaging \
     python-gdata \
-    libcrypto-compat-0.9.8 \
     libshowiframe \
     unrar \
     ofgwrite \

@@ -4,15 +4,18 @@ include conf/machine/include/build-extras.inc
 BRAND_OEM = "ceryon"
 
 MACHINE_NAME = "\
-${@base_contains('MACHINEBUILD', 'p62', 'P62' , '', d)}\
+${@base_contains('MACHINEBUILD', 'twinboxlcd', 'TWINBOX LCD' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mbmicro', 'Premium Micro' , '', d)}\
 "
 
 MACHINE_BRAND = "\
-${@base_contains('MACHINEBUILD', 'p62', 'PowerSat' , '', d)}\
+${@base_contains('MACHINEBUILD', 'twinboxlcd', 'RED EAGLE' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mbmicro', 'Miraclebox' , '', d)}\
 "
 
 IMAGEDIR ?= "\
-${@base_contains('MACHINEBUILD', 'p62', 'ceryon7362' , '', d)}\
+${@base_contains('MACHINEBUILD', 'twinboxlcd', 'redeagle/twinboxlcd' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mbmicro', 'miraclebox/micro' , '', d)}\
 "
 
 MTD_KERNEL = "mtd1"
@@ -59,20 +62,6 @@ IMAGE_CMD_ubi_prepend = " \
     rm -rf ${IMAGE_ROOTFS}/boot/*; \
     rm -rf ${IMAGE_ROOTFS}/tmp/*; \
     "
-
-IMAGE_CMD_ubi_append = " \
-    mkdir -p ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}; \
-    cp ${DEPLOY_DIR_IMAGE}/splash.bin ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}/splash.bin; \
-    mv ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ubi ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}/${ROOTFS_FILE}; \
-    gzip -9c ${DEPLOY_DIR_IMAGE}/vmlinux-${MACHINE}.bin > ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}/${KERNEL_FILE}; \
-    echo ${DISTRO_NAME}-${DISTRO_VERSION}.${BUILD_VERSION} > ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}/imageversion; \
-    echo "rename this file to 'force' to force an update without confirmation" > ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}/noforce; \
-    cd ${DEPLOY_DIR_IMAGE}; \
-    zip ${IMAGE_NAME}_usb.zip ${IMAGEDIR}/*; \
-    rm -f ${DEPLOY_DIR_IMAGE}/*.ubifs; \
-    rm -Rf ${IMAGEDIR}; \
-    "
-
 
 MACHINE_FEATURES += "3dtv alsa hdmicec switchoff wifi bootsplash omb"
 

@@ -6,19 +6,28 @@ BRAND_OEM = "skylake"
 MACHINE_NAME = "\
 ${@base_contains('MACHINEBUILD', 'mutant2400', 'HD2400' , '', d)}\
 ${@base_contains('MACHINEBUILD', 'mutant1100', 'HD1100' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mutant500c', 'HD500C' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mutant1200', 'HD1200' , '', d)}\
 ${@base_contains('MACHINEBUILD', 'quadbox2400', 'QuadBox HD2400' , '', d)}\
+${@base_contains('MACHINEBUILD', 'vizyonvita', 'Vita' , '', d)}\
 "
 
 MACHINE_BRAND = "\
 ${@base_contains('MACHINEBUILD', 'mutant2400', 'Mut@nt' , '', d)}\
 ${@base_contains('MACHINEBUILD', 'mutant1100', 'Mut@nt' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mutant500c', 'Mut@nt' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mutant1200', 'Mut@nt' , '', d)}\
 ${@base_contains('MACHINEBUILD', 'quadbox2400', 'AX' , '', d)}\
+${@base_contains('MACHINEBUILD', 'vizyonvita', 'Vizyon' , '', d)}\
 "
 
 IMAGEDIR ?= "\
 ${@base_contains('MACHINEBUILD', 'mutant2400', 'hd2400' , '', d)}\
 ${@base_contains('MACHINEBUILD', 'mutant1100', 'hd1100' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mutant500c', 'hd500c' , '', d)}\
+${@base_contains('MACHINEBUILD', 'mutant1200', 'hd1200' , '', d)}\
 ${@base_contains('MACHINEBUILD', 'quadbox2400', 'hd2400' , '', d)}\
+${@base_contains('MACHINEBUILD', 'vizyonvita', 'hd1100' , '', d)}\
 "
 
 MTD_KERNEL = "mtd1"
@@ -28,6 +37,7 @@ ROOTFS_FILE = "rootfs.bin"
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "\
     skylake-dvb-modules-${MACHINE} \
+    kernel-vmlinux \
     "
 
 DVBPROVIDER = "kernel"
@@ -48,9 +58,6 @@ TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-skylake"
-
-PREFERRED_VERSION_linux-skylake = "3.17.3"
-PREFERRED_VERSION_linux-libc-headers = "3.13"
 
 KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "${KERNEL_IMAGETYPE}"
@@ -75,9 +82,29 @@ IMAGE_CMD_ubi_append = " \
     cd ${DEPLOY_DIR_IMAGE}; \
     zip ${IMAGE_NAME}_usb.zip ${IMAGEDIR}/*; \
     rm -f ${DEPLOY_DIR_IMAGE}/*.ubifs; \
+    rm -f ${DEPLOY_DIR_IMAGE}/*.manifest; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.ubifs; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.manifest; \
     rm -Rf ${IMAGEDIR}; \
     "
 
+IMAGE_CMD_tar_prepend = " \
+    rm -Rf ${DEPLOY_DIR_IMAGE}/boot; \
+    mkdir ${DEPLOY_DIR_IMAGE}/boot; \
+    gzip -9c ${DEPLOY_DIR_IMAGE}/vmlinux-${MACHINE}.bin > ${DEPLOY_DIR_IMAGE}/boot/vmlinux.gz; \
+    echo "LABEL=sdcard" > ${DEPLOY_DIR_IMAGE}/boot/boot.cfg; \
+    echo "KERNEL=/boot/vmlinux.gz" >> ${DEPLOY_DIR_IMAGE}/boot/boot.cfg; \
+    echo "PRIORITY=10" >> ${DEPLOY_DIR_IMAGE}/boot/boot.cfg; \
+    rm -Rf ${IMAGE_ROOTFS}/tmp/*; \
+    "
+
+IMAGE_CMD_tar_append = "; \
+    tar -rf ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.tar -C ${DEPLOY_DIR_IMAGE} boot; \
+    rm -Rf ${DEPLOY_DIR_IMAGE}/boot; \
+    rm -f ${DEPLOY_DIR_IMAGE}/*.manifest; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.manifest; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.tar.gz; \
+    "
 
 MACHINE_FEATURES += "3dtv alsa hdmicec switchoff wifi bootsplash omb"
 

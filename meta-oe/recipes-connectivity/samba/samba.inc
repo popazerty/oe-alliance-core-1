@@ -14,7 +14,7 @@ S = "${WORKDIR}/samba-${PV}/source"
 inherit autotools-brokensep update-rc.d
 
 FILES_${PN}     += "${libdir}/vfs/*.so ${libdir}/charset/*.so ${libdir}/*.dat \
-                    ${libdir}/auth/*.so ${libdir}/security/*.so"
+                    ${libdir}/auth/*.so ${libdir}/security/*.so ${libdir}/pdb"
 FILES_${PN}-dbg += "${libdir}/vfs/.debug/*.so ${libdir}/charset/.debug/*.so \
                     ${libdir}/auth/.debug/*.so ${libdir}/security/.debug/*.so"
 
@@ -69,8 +69,6 @@ do_install_append() {
     mkdir -p ${D}${base_sbindir}
     rm -f ${D}${bindir}/*.old
     rm -f ${D}${sbindir}/*.old
-    [ -f ${D}${sbindir}/mount.cifs ] && mv ${D}${sbindir}/mount.cifs ${D}${base_sbindir}/
-    [ -f ${D}${sbindir}/umount.cifs ] && mv ${D}${sbindir}/umount.cifs ${D}${base_sbindir}/
 
     # This is needed for < 3.2.4
     rm -f ${D}${sbindir}/mount.smbfs ${D}${base_sbindir}/mount.smbfs

@@ -54,11 +54,14 @@ IMAGE_CMD_ubi_append = " \
     cd ${DEPLOY_DIR_IMAGE}; \
     zip ${IMAGE_NAME}_usb.zip ${IMAGEDIR}/*; \
     rm -f ${DEPLOY_DIR_IMAGE}/*.ubifs; \
+    rm -f ${DEPLOY_DIR_IMAGE}/*.manifest; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.ubifs; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.manifest; \
     rm -Rf ${IMAGEDIR}; \
     "
 
 
-MACHINE_FEATURES += "3dtv alsa blindscan-dvbs hdmicec switchoff wifi omb"
+MACHINE_FEATURES += "3dtv alsa hdmicec switchoff wifi omb"
 
 BOOTLOGO_FILENAME = "splash.bin"
 

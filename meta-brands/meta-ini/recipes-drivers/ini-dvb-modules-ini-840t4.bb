@@ -5,18 +5,14 @@ LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINEBUILD}"
 
 KV = "3.14.2"
-SRCDATE = "20150113"
+SRCDATE = "20150501"
 
 PV = "${KV}+${SRCDATE}"
-PR = "r2"
 
-SRC_URI[md5sum] = "5e6f395c4ef6eebaf19c6a7f14cfcb7f"
-SRC_URI[sha256sum] = "f635367e7ca532b2aca04ab181257400c6e5baac9c56fe523ebb9caae6d06f66"
+SRC_URI[md5sum] = "42b663bde2fb0bf2547a98c030fc7b94"
+SRC_URI[sha256sum] = "56ea501d9450df27346ef1be124f0c0ac446862b49c2e61d71884b9d38b9f817"
 
 SRC_URI = "http://code-ini.com/software/drivers/ini-840t4-drivers-${KV}-${SRCDATE}.zip"
-
-RREPLACES_${PN} = "ini-dvb-modules-inihdp"
-RCONFLICTS_${PN} = "ini-dvb-modules-inihdp"
 
 S = "${WORKDIR}"
 

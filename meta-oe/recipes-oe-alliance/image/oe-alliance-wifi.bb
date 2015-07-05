@@ -9,7 +9,7 @@ ALLOW_EMPTY_${PN} = "1"
 PACKAGES = "${PN}"
 
 PV = "1.0"
-PR = "r21"
+PR = "r22"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 OPTIONAL_WIFIDRIVERS = "${@base_contains("MACHINE_FEATURES", "wifiusblegacy", "enigma2-plugin-drivers-network-usb-rt3070", " \
@@ -26,6 +26,8 @@ OPTIONAL_WIFIDRIVERS = "${@base_contains("MACHINE_FEATURES", "wifiusblegacy", "e
 
 DEPENDS = "enigma2 enigma2-plugins enigma2-oe-alliance-plugins network-usb-drivers-meta"
 
+DEPENDS_remove_xc7362 = "network-usb-drivers-meta"
+
 RDEPENDS_${PN} = "\
     enigma2-plugin-systemplugins-wirelesslan \
     ${@base_contains("MACHINE", "vuduo2", "enigma2-plugin-drivers-network-usb-rt3070", "", d)} \
@@ -40,4 +42,5 @@ RDEPENDS_${PN} = "\
     ${@base_contains("DISTRO_NAME", "openxta", "enigma2-plugin-drivers-network-usb-rtl8192cu", "", d)} \
     ${@base_contains("DISTRO_NAME", "odinsupport", "enigma2-plugin-drivers-network-usb-rtl8192cu", "", d)} \
     ${@base_contains("MACHINEBUILD", "bre2ze", "enigma2-plugin-drivers-network-usb-mt7601u", "", d)} \
+    ${@base_contains("MACHINE", "xc7362", "enigma2-plugin-drivers-network-usb-rt8723bs", "", d)} \
     "

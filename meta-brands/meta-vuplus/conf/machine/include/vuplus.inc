@@ -16,13 +16,15 @@ MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = "\
 
 MACHINE_EXTRA_RRECOMMENDS = " \
     vuplus-shutdown \
-    vuplus-gst-plugin-dvbmediasink \
+    gst-plugin-dvbmediasink \
+    gst-ffmpeg \
+    vuplus-satipclient \
     ${@base_contains('DISTRO_FEATURES', 'audioeffect', 'enigma2-plugin-systemplugins-audioeffect' , '', d)} \
     "
 
 include conf/machine/include/autoload-filesystems.inc
 
-DVBMEDIASINK_CONFIG = "--with-wmv --with-wma --with-pcm --with-eac3"
+DVBMEDIASINK_CONFIG = "--with-amr --with-wmv --with-pcm --with-eac3"
 
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
@@ -33,6 +35,7 @@ PREFERRED_PROVIDER_virtual/kernel = "linux-vuplus"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc = "vuplus-blindscan-utils"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs = "vuplus-blindscan-utils"
 PREFERRED_PROVIDER_virtual/transtreamproxy = "vuplus-transtreamproxy"
+PREFERRED_PROVIDER_virtual/xmbc = "vuplus-xbmc"
 
 KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "${KERNEL_IMAGETYPE}"

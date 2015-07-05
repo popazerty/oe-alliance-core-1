@@ -1,15 +1,17 @@
 SECTION = "base"
 LICENSE = "CLOSED"
 
-PKG_DATE="20141219.0_beta"
+PKG_DATE="20150424.1_beta"
 
-PV="1.0"
-PR="${PKG_DATE}_r0"
+PV="1.1"
+PR="${PKG_DATE}_r1"
 
-DEPENDS += "enigma2 xbmc"
-RDEPENDS_${PN} += "xbmc"
+DEPENDS += "enigma2 virtual/xbmc"
+RDEPENDS_${PN} += "virtual/xbmc"
 
-SRC_URI = "http://archive.vuplus.com/download/build_support/e2xbmc-plugin_${PKG_DATE}.tar.gz"
+SRC_URI = "http://archive.vuplus.com/download/build_support/e2xbmc-plugin_${PKG_DATE}.tar.gz \
+           file://ps.patch \
+"
 
 S = "${WORKDIR}/plugin"
 
@@ -26,6 +28,6 @@ do_package_qa() {
 
 FILES_${PN}="/"
 
-SRC_URI[md5sum] = "31542f3ad42725d2a7ac498be4870e31"
-SRC_URI[sha256sum] = "f662de7daab96fa690686cbefab597f0cf5e42a7abfc6e414faa1f1c4aff1cdc"
+SRC_URI[md5sum] = "74687180693181e80ab2631741bb95e3"
+SRC_URI[sha256sum] = "c9f8f30df576caedf165fe69aeec4acced3904383278fa9278e3923c7fa6a200"
 

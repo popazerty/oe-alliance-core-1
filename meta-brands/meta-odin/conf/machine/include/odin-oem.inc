@@ -106,8 +106,6 @@ PREFERRED_PROVIDER_virtual/kernel = "linux-odin"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc = "odin-blindscan-utils-${MACHINE}"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs = "odin-blindscan-utils-${MACHINE}"
 
-PREFERRED_VERSION_linux-odin = "3.6.0"
-PREFERRED_VERSION_linux-libc-headers = "3.6"
 PREFERRED_VERSION_nfs-utils ?= "1.2.8"
 
 KERNEL_IMAGETYPE = "vmlinux"
@@ -135,6 +133,9 @@ IMAGE_CMD_ubi_append = " \
     cd ${DEPLOY_DIR_IMAGE}; \
     zip ${IMAGE_NAME}_usb.zip ${IMAGEDIR}/*; \
     rm -f ${DEPLOY_DIR_IMAGE}/*.ubifs; \
+    rm -f ${DEPLOY_DIR_IMAGE}/*.manifest; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.ubifs; \
+    rm -f ${DEPLOY_DIR_IMAGE}/.manifest; \
     rm -Rf ${IMAGEDIR}; \
     "
 
